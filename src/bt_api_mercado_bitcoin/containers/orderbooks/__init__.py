@@ -27,7 +27,7 @@ class MercadoBitcoinOrderBookData(OrderBookData):
         self.asks: list[list[float]] | None = None
         self.has_been_init_data = False
 
-    def init_data(self) -> "MercadoBitcoinOrderBookData":
+    def init_data(self) -> MercadoBitcoinOrderBookData:
         if not self.has_been_json_encoded:
             self.orderbook_data = (
                 json.loads(self.orderbook_info) if isinstance(self.orderbook_info, str) else {}

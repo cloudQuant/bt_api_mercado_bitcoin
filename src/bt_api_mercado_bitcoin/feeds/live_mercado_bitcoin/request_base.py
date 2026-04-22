@@ -10,6 +10,7 @@ from bt_api_base.containers.requestdatas.request_data import RequestData
 from bt_api_base.feeds.capability import Capability
 from bt_api_base.feeds.feed import Feed
 from bt_api_base.feeds.http_client import HttpClient
+
 from bt_api_mercado_bitcoin.exchange_data import MercadoBitcoinExchangeDataSpot
 
 
@@ -50,7 +51,9 @@ class MercadoBitcoinRequestData(Feed):
             body = urlencode(body_params)
             auth = f"/tapi/v3/?{body}"
             signature = hmac.new(
-                secret.encode("utf-8"), auth.encode("utf-8"), hashlib.sha512
+                secret.encode("utf-8"),
+                auth.encode("utf-8"),
+                hashlib.sha512,
             ).hexdigest()
             return signature, body
         return "", ""
@@ -118,7 +121,7 @@ class MercadoBitcoinRequestData(Feed):
             self.logger.error(f"Async request failed: {e}")
             raise
 
-    def async_callback(self, future):
+    def async_callback(self, future) -> None:
         try:
             result = future.result()
             if result is not None:
@@ -142,7 +145,7 @@ class MercadoBitcoinRequestData(Feed):
                 "asset_type": self.asset_type,
                 "request_type": "get_server_time",
                 "normalize_function": self._get_server_time_normalize_function,
-            }
+            },
         )
         return path, {}, extra_data
 
@@ -160,15 +163,15 @@ class MercadoBitcoinRequestData(Feed):
             return ts, True
         return input_data, True
 
-    def push_data_to_queue(self, data):
+    def push_data_to_queue(self, data) -> None:
         if self.data_queue is not None:
             self.data_queue.put(data)
 
-    def connect(self):
+    def connect(self) -> None:
         pass
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         super().disconnect()
 
-    def is_connected(self):
+    def is_connected(self) -> bool:
         return True

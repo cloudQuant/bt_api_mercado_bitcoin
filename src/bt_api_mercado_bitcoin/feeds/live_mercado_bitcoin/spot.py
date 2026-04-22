@@ -4,6 +4,7 @@ import time as _time
 from typing import Any
 
 from bt_api_base.functions.utils import update_extra_data
+
 from bt_api_mercado_bitcoin.feeds.live_mercado_bitcoin.request_base import MercadoBitcoinRequestData
 
 
@@ -17,13 +18,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path = f"GET /{coin}/ticker/"
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "get_tick",
-                "symbol_name": symbol,
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "normalize_function": MercadoBitcoinRequestDataSpot._get_tick_normalize_function,
-            },
+            request_type="get_tick",
+            symbol_name=symbol,
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            normalize_function=MercadoBitcoinRequestDataSpot._get_tick_normalize_function,
         )
         return path, None, extra_data
 
@@ -38,7 +37,7 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path, params, extra_data = self._get_tick(symbol, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
-    def async_get_tick(self, symbol, extra_data=None, **kwargs):
+    def async_get_tick(self, symbol, extra_data=None, **kwargs) -> None:
         path, params, extra_data = self._get_tick(symbol, extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data),
@@ -53,13 +52,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path = f"GET /{coin}/orderbook/"
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "get_depth",
-                "symbol_name": symbol,
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "normalize_function": MercadoBitcoinRequestDataSpot._get_depth_normalize_function,
-            },
+            request_type="get_depth",
+            symbol_name=symbol,
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            normalize_function=MercadoBitcoinRequestDataSpot._get_depth_normalize_function,
         )
         return path, None, extra_data
 
@@ -73,7 +70,7 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path, params, extra_data = self._get_depth(symbol, count, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
-    def async_get_depth(self, symbol, count=20, extra_data=None, **kwargs):
+    def async_get_depth(self, symbol, count=20, extra_data=None, **kwargs) -> None:
         path, params, extra_data = self._get_depth(symbol, count, extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data),
@@ -87,13 +84,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         resolution = self._params.get_period(period, "1d")
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "get_kline",
-                "symbol_name": symbol,
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "normalize_function": MercadoBitcoinRequestDataSpot._get_kline_normalize_function,
-            },
+            request_type="get_kline",
+            symbol_name=symbol,
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            normalize_function=MercadoBitcoinRequestDataSpot._get_kline_normalize_function,
         )
         params = {
             "symbol": symbol,
@@ -114,7 +109,7 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path, params, extra_data = self._get_kline(symbol, period, count, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
-    def async_get_kline(self, symbol, period, count=20, extra_data=None, **kwargs):
+    def async_get_kline(self, symbol, period, count=20, extra_data=None, **kwargs) -> None:
         path, params, extra_data = self._get_kline(symbol, period, count, extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data),
@@ -125,13 +120,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path = "POST /tapi/v3/get_account_info"
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "get_balance",
-                "symbol_name": symbol or "",
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "normalize_function": MercadoBitcoinRequestDataSpot._get_balance_normalize_function,
-            },
+            request_type="get_balance",
+            symbol_name=symbol or "",
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            normalize_function=MercadoBitcoinRequestDataSpot._get_balance_normalize_function,
         )
         return path, {}, extra_data
 
@@ -149,13 +142,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         path = "POST /tapi/v3/get_account_info"
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "get_account",
-                "symbol_name": "",
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "normalize_function": MercadoBitcoinRequestDataSpot._get_account_normalize_function,
-            },
+            request_type="get_account",
+            symbol_name="",
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            normalize_function=MercadoBitcoinRequestDataSpot._get_account_normalize_function,
         )
         return path, {}, extra_data
 
@@ -170,7 +161,14 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return self.request(path, params=params, extra_data=extra_data)
 
     def _make_order(
-        self, symbol, volume, price, order_type, offset="open", extra_data=None, **kwargs
+        self,
+        symbol,
+        volume,
+        price,
+        order_type,
+        offset="open",
+        extra_data=None,
+        **kwargs,
     ):
         coin = symbol.split("-")[0] if "-" in symbol else symbol
         path = (
@@ -185,13 +183,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         }
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "make_order",
-                "symbol_name": symbol,
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "normalize_function": MercadoBitcoinRequestDataSpot._make_order_normalize_function,
-            },
+            request_type="make_order",
+            symbol_name=symbol,
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            normalize_function=MercadoBitcoinRequestDataSpot._make_order_normalize_function,
         )
         return path, params, extra_data
 
@@ -214,7 +210,13 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         **kwargs,
     ):
         path, params, extra_data = self._make_order(
-            symbol, volume, price, order_type, offset, extra_data, **kwargs
+            symbol,
+            volume,
+            price,
+            order_type,
+            offset,
+            extra_data,
+            **kwargs,
         )
         return self.request(path, params=params, extra_data=extra_data)
 
@@ -227,13 +229,11 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         }
         extra_data = update_extra_data(
             extra_data,
-            **{
-                "request_type": "cancel_order",
-                "symbol_name": symbol,
-                "asset_type": self.asset_type,
-                "exchange_name": self.exchange_name,
-                "order_id": order_id,
-            },
+            request_type="cancel_order",
+            symbol_name=symbol,
+            asset_type=self.asset_type,
+            exchange_name=self.exchange_name,
+            order_id=order_id,
         )
         return path, params, extra_data
 

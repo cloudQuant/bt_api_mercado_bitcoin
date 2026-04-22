@@ -9,7 +9,8 @@ from bt_api_mercado_bitcoin.registry_registration import register_mercado_bitcoi
 
 
 def register_plugin(
-    registry: type[ExchangeRegistry], runtime_factory: type[GatewayRuntimeRegistrar]
+    registry: type[ExchangeRegistry],
+    runtime_factory: type[GatewayRuntimeRegistrar],
 ) -> PluginInfo:
     register_mercado_bitcoin(registry)
     return PluginInfo(
