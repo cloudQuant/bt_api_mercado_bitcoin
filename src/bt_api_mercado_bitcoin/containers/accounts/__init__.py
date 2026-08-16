@@ -30,7 +30,7 @@ class MercadoBitcoinAccountData(AccountData):
         self.all_data: dict[str, Any] | None = None
         self.has_been_init_data = False
 
-    def init_data(self) -> "MercadoBitcoinAccountData":
+    def init_data(self) -> MercadoBitcoinAccountData:
         """init_data method"""
         if not self.has_been_json_encoded:
             self.account_data = (
