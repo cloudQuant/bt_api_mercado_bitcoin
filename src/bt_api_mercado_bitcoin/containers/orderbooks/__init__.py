@@ -1,3 +1,4 @@
+"""Module-level docstring."""
 from __future__ import annotations
 
 import json
@@ -8,6 +9,7 @@ from bt_api_base.containers.orderbooks.orderbook import OrderBookData
 
 
 class MercadoBitcoinOrderBookData(OrderBookData):
+    """Class MercadoBitcoinOrderBookData"""
     def __init__(
         self,
         orderbook_info: str | dict[str, Any],
@@ -15,6 +17,7 @@ class MercadoBitcoinOrderBookData(OrderBookData):
         asset_type: str,
         has_been_json_encoded: bool = False,
     ) -> None:
+        """__init__ method"""
         super().__init__(orderbook_info, has_been_json_encoded)
         self.exchange_name = "MERCADO_BITCOIN"
         self.local_update_time = time.time()
@@ -28,6 +31,7 @@ class MercadoBitcoinOrderBookData(OrderBookData):
         self.has_been_init_data = False
 
     def init_data(self) -> "MercadoBitcoinOrderBookData":
+        """init_data method"""
         if not self.has_been_json_encoded:
             self.orderbook_data = (
                 json.loads(self.orderbook_info) if isinstance(self.orderbook_info, str) else {}
@@ -55,29 +59,37 @@ class MercadoBitcoinOrderBookData(OrderBookData):
         return self
 
     def get_exchange_name(self) -> str:
+        """get_exchange_name method"""
         return self.exchange_name
 
     def get_symbol_name(self) -> str:
+        """get_symbol_name method"""
         return self.symbol_name
 
     def get_asset_type(self) -> str:
+        """get_asset_type method"""
         return self.asset_type
 
     def get_bids(self) -> list[list[float]]:
+        """get_bids method"""
         self.init_data()
         return self.bids or []
 
     def get_asks(self) -> list[list[float]]:
+        """get_asks method"""
         self.init_data()
         return self.asks or []
 
     def get_local_update_time(self) -> float:
+        """get_local_update_time method"""
         return float(self.local_update_time)
 
 
 class MercadoBitcoinRequestOrderBookData(MercadoBitcoinOrderBookData):
+    """Class MercadoBitcoinRequestOrderBookData"""
     pass
 
 
 class MercadoBitcoinWssOrderBookData(MercadoBitcoinOrderBookData):
+    """Class MercadoBitcoinWssOrderBookData"""
     pass

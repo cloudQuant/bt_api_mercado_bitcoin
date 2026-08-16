@@ -1,3 +1,4 @@
+"""Module-level docstring."""
 from __future__ import annotations
 
 from bt_api_mercado_bitcoin.containers.tickers import MercadoBitcoinRequestTickerData

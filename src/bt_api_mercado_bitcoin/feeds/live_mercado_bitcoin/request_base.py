@@ -1,3 +1,4 @@
+"""Module documentation"""
 from __future__ import annotations
 
 import hashlib
@@ -14,6 +15,7 @@ from bt_api_mercado_bitcoin.exchange_data import MercadoBitcoinExchangeDataSpot
 
 
 class MercadoBitcoinRequestData(Feed):
+    """Class MercadoBitcoinRequestData"""
     @classmethod
     def _capabilities(cls) -> set[Capability]:
         return {
@@ -28,6 +30,7 @@ class MercadoBitcoinRequestData(Feed):
         }
 
     def __init__(self, data_queue: Any = None, **kwargs: Any) -> None:
+        """__init__ method"""
         super().__init__(data_queue, **kwargs)
         self.data_queue = data_queue
         self.exchange_name = kwargs.get("exchange_name", "MERCADO_BITCOIN___SPOT")
@@ -77,6 +80,7 @@ class MercadoBitcoinRequestData(Feed):
         return base_url
 
     def request(self, path, params=None, body=None, extra_data=None, timeout=10):
+        """request method"""
         method = path.split()[0] if " " in path else "GET"
         request_path = path.split()[1] if " " in path else path
         if not request_path.startswith("/"):
@@ -99,6 +103,7 @@ class MercadoBitcoinRequestData(Feed):
             raise
 
     async def async_request(self, path, params=None, body=None, extra_data=None, timeout=5):
+        """async_request method"""
         method = path.split()[0] if " " in path else "GET"
         request_path = path.split()[1] if " " in path else path
         if not request_path.startswith("/"):
@@ -119,6 +124,7 @@ class MercadoBitcoinRequestData(Feed):
             raise
 
     def async_callback(self, future):
+        """async_callback method"""
         try:
             result = future.result()
             if result is not None:
@@ -147,6 +153,7 @@ class MercadoBitcoinRequestData(Feed):
         return path, {}, extra_data
 
     def get_server_time(self, extra_data=None, **kwargs):
+        """get_server_time method"""
         path, params, extra_data = self._get_server_time(extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
@@ -161,14 +168,18 @@ class MercadoBitcoinRequestData(Feed):
         return input_data, True
 
     def push_data_to_queue(self, data):
+        """push_data_to_queue method"""
         if self.data_queue is not None:
             self.data_queue.put(data)
 
     def connect(self):
+        """connect method"""
         pass
 
     def disconnect(self):
+        """disconnect method"""
         super().disconnect()
 
     def is_connected(self):
+        """is_connected method"""
         return True

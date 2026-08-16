@@ -1,3 +1,4 @@
+"""Module-level docstring."""
 from __future__ import annotations
 
 from typing import Any
@@ -6,6 +7,7 @@ from bt_api_mercado_bitcoin.feeds.live_mercado_bitcoin.request_base import Merca
 
 
 def test_mercado_bitcoin_accepts_public_private_key_aliases(monkeypatch: Any) -> None:
+    """test_mercado_bitcoin_accepts_public_private_key_aliases function"""
     request_data = MercadoBitcoinRequestData(public_key="public-key", private_key="secret-key")
     monkeypatch.setattr(
         "bt_api_mercado_bitcoin.feeds.live_mercado_bitcoin.request_base.time.time",

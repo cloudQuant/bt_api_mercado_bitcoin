@@ -1,3 +1,4 @@
+"""Module-level docstring."""
 from __future__ import annotations
 
 import time as _time
@@ -8,7 +9,9 @@ from bt_api_mercado_bitcoin.feeds.live_mercado_bitcoin.request_base import Merca
 
 
 class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
+    """Class MercadoBitcoinRequestDataSpot"""
     def __init__(self, data_queue: Any = None, **kwargs: Any) -> None:
+        """__init__ method"""
         super().__init__(data_queue, **kwargs)
         self.exchange_name = kwargs.get("exchange_name", "MERCADO_BITCOIN___SPOT")
 
@@ -35,10 +38,12 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return [ticker], ticker is not None
 
     def get_tick(self, symbol, extra_data=None, **kwargs):
+        """get_tick method"""
         path, params, extra_data = self._get_tick(symbol, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
     def async_get_tick(self, symbol, extra_data=None, **kwargs):
+        """async_get_tick method"""
         path, params, extra_data = self._get_tick(symbol, extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data),
@@ -70,10 +75,12 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return [input_data], True
 
     def get_depth(self, symbol, count=20, extra_data=None, **kwargs):
+        """get_depth method"""
         path, params, extra_data = self._get_depth(symbol, count, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
     def async_get_depth(self, symbol, count=20, extra_data=None, **kwargs):
+        """async_get_depth method"""
         path, params, extra_data = self._get_depth(symbol, count, extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data),
@@ -111,10 +118,12 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return [klines], klines is not None
 
     def get_kline(self, symbol, period, count=20, extra_data=None, **kwargs):
+        """get_kline method"""
         path, params, extra_data = self._get_kline(symbol, period, count, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
     def async_get_kline(self, symbol, period, count=20, extra_data=None, **kwargs):
+        """async_get_kline method"""
         path, params, extra_data = self._get_kline(symbol, period, count, extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data),
@@ -142,6 +151,7 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return [input_data], True
 
     def get_balance(self, symbol=None, extra_data=None, **kwargs):
+        """get_balance method"""
         path, params, extra_data = self._get_balance(symbol, extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
@@ -166,6 +176,7 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return [input_data], True
 
     def get_account(self, symbol="ALL", extra_data=None, **kwargs):
+        """get_account method"""
         path, params, extra_data = self._get_account(extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)
 
@@ -213,6 +224,7 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         extra_data=None,
         **kwargs,
     ):
+        """make_order method"""
         path, params, extra_data = self._make_order(
             symbol, volume, price, order_type, offset, extra_data, **kwargs
         )
@@ -238,5 +250,6 @@ class MercadoBitcoinRequestDataSpot(MercadoBitcoinRequestData):
         return path, params, extra_data
 
     def cancel_order(self, symbol, order_id, extra_data=None, **kwargs):
+        """cancel_order method"""
         path, params, extra_data = self._cancel_order(symbol, order_id, **kwargs)
         return self.request(path, params=params, extra_data=extra_data)

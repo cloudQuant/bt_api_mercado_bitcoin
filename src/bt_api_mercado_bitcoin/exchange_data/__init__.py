@@ -1,10 +1,13 @@
+"""Module-level docstring."""
 from __future__ import annotations
 
 from bt_api_base.containers.exchanges.exchange_data import ExchangeData
 
 
 class MercadoBitcoinExchangeData(ExchangeData):
+    """Class MercadoBitcoinExchangeData"""
     def __init__(self) -> None:
+        """__init__ method"""
         super().__init__()
         self.exchange_name = "MERCADO_BITCOIN___SPOT"
         self.rest_url = "https://www.mercadobitcoin.net/api"
@@ -24,13 +27,17 @@ class MercadoBitcoinExchangeData(ExchangeData):
         self.legal_currency = ["BRL"]
 
     def get_symbol(self, symbol: str) -> str:
+        """get_symbol method"""
         return symbol
 
     def get_period(self, key, default=None):
+        """get_period method"""
         return self.kline_periods.get(key, default or key)
 
 
 class MercadoBitcoinExchangeDataSpot(MercadoBitcoinExchangeData):
+    """Class MercadoBitcoinExchangeDataSpot"""
     def __init__(self) -> None:
+        """__init__ method"""
         super().__init__()
         self.asset_type = "spot"
